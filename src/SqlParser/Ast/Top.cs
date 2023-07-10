@@ -10,16 +10,6 @@ public record Top(Expression? Quantity, bool WithTies, bool Percent) : IWriteSql
 {
     public void ToSql(SqlTextWriter writer)
     {
-        var extension = WithTies ? " WITH TIES" : null;
-
-        if (Quantity != null)
-        {
-            var percent = Percent ? " PERCENT" : null;
-            writer.WriteSql($"TOP ({Quantity}){percent}{extension}");
-        }
-        else
-        {
-            writer.WriteSql($"TOP{extension}");
-        }
+        writer.ToSql(this);
     }
 }

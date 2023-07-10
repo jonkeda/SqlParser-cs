@@ -23,67 +23,6 @@ public record Select([Visit(1)] Sequence<SelectItem> Projection) : IWriteSql, IE
 
     public void ToSql(SqlTextWriter writer)
     {
-        var distinct = Distinct ? " DISTINCT" : null;
-        writer.Write($"SELECT{distinct}");
-
-        if (Top != null)
-        {
-            writer.WriteSql($" {Top}");
-        }
-
-        writer.WriteSql($" {Projection}");
-
-        if (Into != null)
-        {
-            writer.WriteSql($" {Into}");
-        }
-
-        if (From != null)
-        {
-            writer.WriteSql($" FROM {From}");
-        }
-
-        if (LateralViews.SafeAny())
-        {
-            foreach (var view in LateralViews!)
-            {
-               view.ToSql(writer);
-            }
-        }
-
-        if (Selection != null)
-        {
-            writer.WriteSql($" WHERE {Selection}");
-        }
-
-        if (GroupBy != null)
-        {
-            writer.WriteSql($" GROUP BY {GroupBy}");
-        }
-
-        if (ClusterBy != null)
-        {
-            writer.WriteSql($" CLUSTER BY {ClusterBy}");
-        }
-
-        if (DistributeBy != null)
-        {
-            writer.WriteSql($" DISTRIBUTE BY {DistributeBy}");
-        }
-
-        if (SortBy != null)
-        {
-            writer.WriteSql($" SORT BY {SortBy}");
-        }
-
-        if (Having != null)
-        {
-            writer.WriteSql($" HAVING {Having}");
-        }
-
-        if (QualifyBy != null)
-        {
-            writer.WriteSql($" QUALIFY {QualifyBy}");
-        }
+        writer.ToSql(this);
     }
 }

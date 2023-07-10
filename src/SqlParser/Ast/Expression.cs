@@ -437,21 +437,8 @@ public abstract record Expression : IWriteSql, IElement
 
         public override void ToSql(SqlTextWriter writer)
         {
-            if (Special)
-            {
-                Name.ToSql(writer);
-            }
-            else
-            {
-                var distinct = Distinct ? "DISTINCT " : null;
-                writer.WriteSql($"{Name}({distinct}{Args})");
-
-                if (Over != null)
-                {
-                    writer.WriteSql($" OVER ({Over})");
-                }
-            }
-        }
+            writer.ToSql(this);
+       }
     }
     /// <summary>
     /// GROUPING SETS expression.

@@ -25,36 +25,6 @@ public record Query([Visit(1)] SetExpression Body) : IWriteSql, IElement
 
     public void ToSql(SqlTextWriter writer)
     {
-        if (With != null)
-        {
-            writer.WriteSql($"{With} ");
-        }
-
-        Body.ToSql(writer);
-
-        if (OrderBy != null)
-        {
-            writer.WriteSql($" ORDER BY {OrderBy}");
-        }
-
-        if (Limit != null)
-        {
-            writer.WriteSql($" LIMIT {Limit}");
-        }
-
-        if (Offset != null)
-        {
-            writer.WriteSql($" {Offset}");
-        }
-
-        if (Fetch != null)
-        {
-            writer.WriteSql($" {Fetch}");
-        }
-
-        if (Locks != null && Locks.Any())
-        {
-            writer.WriteSql($" {Locks.ToSqlDelimited(Symbols.Space.ToString())}");
-        }
+       writer.ToSql(this);
     }
 }

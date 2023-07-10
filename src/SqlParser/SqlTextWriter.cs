@@ -4,12 +4,12 @@ using SqlParser.Ast;
 
 namespace SqlParser;
 
-public class SqlTextWriter : StringWriter
+public partial class SqlTextWriter : StringWriter
 {
     public SqlTextWriter(StringBuilder sb) : base(sb)
     {
     }
-    
+
     /// <summary>
     /// Writes SQL using a custom string interpolation handler.  Doing so
     /// allows IWriteSql types to be written using "ToSql" using the
@@ -59,7 +59,7 @@ public class SqlTextWriter : StringWriter
     public void WriteList<T>(IEnumerable<T>? enumerable) where T : IWriteSql
     {
         if (enumerable == null) { return; }
-      
+
         foreach (var item in enumerable)
         {
             item.ToSql(this);
